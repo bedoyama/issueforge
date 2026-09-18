@@ -1,0 +1,30 @@
+@let issue = current();
+@if (issue) {
+  <article>
+    <button type="button" class="link" (click)="back()">← Board</button>
+    <header>
+      <h1>{{ issue.title }}</h1>
+      @if (session.hasRole('member')) {
+        <button type="button" (click)="edit()">Edit</button>
+      }
+    </header>
+    <p class="meta">
+      {{ issue.status | statusLabel }} · {{ issue.priority | statusLabel }} ·
+      {{ userName(issue.assigneeId) }} · {{ issue.createdAt | timeAgo: clock.now() }}
+    </p>
+    <p class="body">{{ issue.description }}</p>
+    <div class="labels">
+      @for (id of issue.labelIds; track id) {
+        @if (label(id); as lab) {
+          <forge-badge [tone]="lab.color">{{ lab.name }}</forge-badge>
+        }
+      }
+    </div>
+    <nav>
+      <a [routerLink]="['comments']" routerLinkActive="on">Comments</a>
+    </nav>
+    @defer {
+      <router-outlet />
+    }
+  </article>
+}

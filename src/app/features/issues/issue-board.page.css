@@ -1,0 +1,12 @@
+section { padding: var(--space-6); display: grid; gap: var(--space-4); }
+header { display: flex; justify-content: space-between; align-items: center; }
+.eyebrow { color: var(--accent); font-size: 12px; font-weight: 600; }
+.filters { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.board { display: grid; grid-template-columns: repeat(4, minmax(180px, 1fr)); gap: 12px; }
+:host ::ng-deep .cdk-drag-preview { box-shadow: var(--shadow); border-radius: 10px; }
+:host ::ng-deep .cdk-drag-placeholder { opacity: 0.4; }
+button { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 8px; padding: 8px 12px; cursor: pointer; }
+
+@media (max-width: 900px) {
+  .board { grid-template-columns: 1fr; }
+}

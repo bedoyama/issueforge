@@ -1,0 +1,9 @@
+article { padding: var(--space-8); display: grid; gap: var(--space-4); max-width: 720px; }
+header { display: flex; justify-content: space-between; gap: 12px; }
+.meta, .body { color: var(--text-muted); }
+.body { white-space: pre-wrap; color: var(--text); }
+.labels { display: flex; gap: 6px; flex-wrap: wrap; }
+nav a { margin-right: 12px; }
+nav a.on { color: var(--text); }
+button { background: var(--bg-elev); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+.link { background: none; border: 0; color: var(--accent); padding: 0; width: fit-content; }

@@ -1,0 +1,49 @@
+<section>
+  <h1>{{ editing() ? 'Edit issue' : 'New issue' }}</h1>
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <forge-text-field label="Title">
+      <input formControlName="title" />
+    </forge-text-field>
+    <forge-text-field label="Description">
+      <textarea formControlName="description" rows="6"></textarea>
+    </forge-text-field>
+    <div class="row">
+      <forge-text-field label="Status">
+        <select formControlName="status">
+          @for (s of statuses; track s) {
+            <option [value]="s">{{ s }}</option>
+          }
+        </select>
+      </forge-text-field>
+      <forge-text-field label="Priority">
+        <select formControlName="priority">
+          @for (p of priorities; track p) {
+            <option [value]="p">{{ p }}</option>
+          }
+        </select>
+      </forge-text-field>
+      <forge-text-field label="Assignee">
+        <select formControlName="assigneeId">
+          <option [ngValue]="null">Unassigned</option>
+          @for (u of users.value(); track u.id) {
+            <option [ngValue]="u.id">{{ u.name }}</option>
+          }
+        </select>
+      </forge-text-field>
+    </div>
+    <fieldset>
+      <legend>Labels</legend>
+      @for (lab of labels.value(); track lab.id) {
+        <label>
+          <input
+            type="checkbox"
+            [checked]="form.controls.labelIds.value.includes(lab.id)"
+            (change)="toggleLabel(lab.id, $any($event.target).checked)"
+          />
+          {{ lab.name }}
+        </label>
+      }
+    </fieldset>
+    <forge-button variant="primary" type="submit" [disabled]="form.invalid">Save</forge-button>
+  </form>
+</section>

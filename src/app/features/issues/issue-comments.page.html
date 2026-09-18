@@ -1,0 +1,21 @@
+<section>
+  @if (comments.hasValue()) {
+    <ul>
+      @for (c of comments.value(); track c.id) {
+        <li>
+          <strong>{{ author(c.authorId) }}</strong>
+          <span>{{ c.createdAt | timeAgo: clock.now() }}</span>
+          <p>{{ c.body }}</p>
+        </li>
+      } @empty {
+        <forge-empty-state title="No comments yet" message="Start the thread." />
+      }
+    </ul>
+  }
+  @if (session.hasRole('member')) {
+    <form (ngSubmit)="post()">
+      <textarea [(ngModel)]="draft" name="body" rows="3" placeholder="Write a comment"></textarea>
+      <button type="submit">Comment</button>
+    </form>
+  }
+</section>

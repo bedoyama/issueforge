@@ -1,0 +1,18 @@
+<section>
+  <h1>Projects</h1>
+  @if (projects.isLoading()) {
+    <forge-spinner />
+  } @else if (projects.error()) {
+    <forge-empty-state title="Could not load projects" message="Try the chaos panel or refresh." />
+  } @else if (projects.hasValue()) {
+    @defer {
+      <div class="grid">
+        @for (p of projects.value(); track p.id) {
+          <forge-project-card [project]="p" />
+        } @empty {
+          <forge-empty-state title="No projects" />
+        }
+      </div>
+    }
+  }
+</section>

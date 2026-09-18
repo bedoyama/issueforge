@@ -1,0 +1,58 @@
+<section>
+  <header>
+    <div>
+      <p class="eyebrow">{{ project.value()?.key }}</p>
+      <h1>{{ project.value()?.name ?? 'Board' }}</h1>
+    </div>
+    @if (session.hasRole('member')) {
+      <button type="button" (click)="newIssue()">New issue</button>
+    }
+  </header>
+
+  <div class="filters">
+    <forge-issue-search [value]="filters().query" (queryChange)="onSearch($event)" />
+    <forge-issue-filters
+      [status]="filters().status"
+      [assigneeId]="filters().assigneeId"
+      (statusChange)="onStatus($event)"
+      (assigneeChange)="onAssignee($event)"
+    />
+  </div>
+
+  @if (issues.isLoading()) {
+    <forge-spinner />
+  } @else if (issues.error()) {
+    <forge-empty-state title="Could not load issues" message="Check the chaos panel." />
+  } @else {
+    <div class="board" cdkDropListGroup>
+      @for (col of columns(); track col.status) {
+        @switch (col.status) {
+          @case ('todo') {
+            <forge-issue-column
+              [status]="col.status"
+              [issues]="col.issues"
+              [projectKey]="project.value()?.key ?? 'IF'"
+              [query]="filters().query"
+              [usersById]="usersById()"
+              [labelsById]="labelsById()"
+              (open)="openIssue($event)"
+              (move)="moveIssue($event)"
+            />
+          }
+          @default {
+            <forge-issue-column
+              [status]="col.status"
+              [issues]="col.issues"
+              [projectKey]="project.value()?.key ?? 'IF'"
+              [query]="filters().query"
+              [usersById]="usersById()"
+              [labelsById]="labelsById()"
+              (open)="openIssue($event)"
+              (move)="moveIssue($event)"
+            />
+          }
+        }
+      }
+    </div>
+  }
+</section>

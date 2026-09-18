@@ -1,0 +1,8 @@
+section { display: grid; gap: 16px; }
+ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+li { background: var(--bg-elev); border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+span { color: var(--text-muted); margin-left: 8px; font-size: 12px; }
+form { display: grid; gap: 8px; }
+textarea, button { font: inherit; }
+textarea { background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 8px; }
+button { width: fit-content; background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 8px; padding: 8px 12px; }
