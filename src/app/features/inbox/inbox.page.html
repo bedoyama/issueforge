@@ -1,0 +1,22 @@
+<section>
+  <header>
+    <h1>Inbox</h1>
+    <button type="button" (click)="notes.refresh()">Refresh now</button>
+  </header>
+  <ul>
+    @for (n of notes.items(); track n.id) {
+      <li [class.unread]="!n.read">
+        <p>
+          <strong>{{ actor(n.actorId) }}</strong> {{ n.type.replace('_', ' ') }}
+          <a [routerLink]="['/issues', n.issueId]">{{ n.issueId }}</a>
+        </p>
+        <span>{{ n.createdAt | timeAgo: clock.now() }}</span>
+        @if (!n.read) {
+          <button type="button" (click)="mark(n.id)">Mark read</button>
+        }
+      </li>
+    } @empty {
+      <forge-empty-state title="All caught up" />
+    }
+  </ul>
+</section>

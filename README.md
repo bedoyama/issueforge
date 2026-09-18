@@ -1,59 +1,55 @@
-# Issueforge
+# IssueForge
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.8.
+A Jira-lite **issue tracker** built as a modern Angular 22 interview portfolio. There is no real backend: the app talks to itself through `HttpClient` / `httpResource` against `/api/**`. A functional interceptor owns an in-memory store (persisted to `localStorage`), fake JWTs, latency, and 401/403/500/timeout knobs.
 
-## Development server
-
-To start a local development server, run:
+## Run
 
 ```bash
-ng serve
+npm install
+npm start
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Open [http://localhost:4200](http://localhost:4200).
 
 ```bash
-ng generate component component-name
+npm test
+npm run build
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Demo accounts
 
-```bash
-ng generate --help
-```
+Password for all: `password` (kept in `mock.seed.ts`, **not** written to `localStorage`).
 
-## Building
+| Email | Role |
+| --- | --- |
+| `ada@board.dev` | admin |
+| `linus@board.dev` | member |
+| `grace@board.dev` | viewer |
 
-To build the project run:
+Use the **Demo** switcher in the header to impersonate without retyping credentials. **Chaos** injects latency and errors.
 
-```bash
-ng build
-```
+## Nested comments
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Comments are a nested **route** (`.../issues/:id/comments`), a flat list, not threads.
 
-## Running unit tests
+## What to show in interviews
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+| Topic | Where |
+| --- | --- |
+| Signals / `computed` / `linkedSignal` | `issue-board.page.ts`, `auth.session.ts` |
+| `effect` (prefs + directives only) | `prefs.service.ts`, `has-role.directive.ts`, `highlight-query.directive.ts` |
+| `httpResource` | project list, board, detail |
+| Writes via `HttpClient` | `issue.service.ts` |
+| RxJS debounce | `issue-search.component.ts` |
+| RxJS `switchMap` cancel | assignee typeahead on `issue-filters.component.ts` |
+| RxJS poll stream | `notifications.service.ts` |
+| `@if` `@for` `@empty` `@switch` `@defer` | board, lists, detail |
+| Functional guards / resolver | `auth.guard.ts`, `role.guard.ts`, `unsaved-changes.guard.ts`, `issue-detail.resolver.ts` |
+| Interceptors | auth → loading → toast → mock last |
+| Signal Forms | `login.page.ts` |
+| Reactive Forms | `issue-form.page.ts` |
+| Lazy admin | `admin.routes.ts` |
+| CDK drag-drop | board columns (same `PATCH` as the status select) |
+| Zoneless | no `zone.js` |
 
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Full design: [docs/issueforge-design.md](docs/issueforge-design.md).
