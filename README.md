@@ -1,8 +1,19 @@
 # IssueForge
 
-A Jira-lite **issue tracker** built as a modern Angular 22 interview portfolio. There is no real backend: the app talks to itself through `HttpClient` / `httpResource` against `/api/**`. A functional interceptor owns an in-memory store (persisted to `localStorage`), fake JWTs, latency, and 401/403/500/timeout knobs.
+[![CI](https://github.com/bedoyama/issueforge/actions/workflows/ci.yml/badge.svg)](https://github.com/bedoyama/issueforge/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Angular](https://img.shields.io/badge/Angular-22-dd0031.svg)](https://angular.dev)
 
-## Run
+A Jira-lite issue tracker built as a **modern Angular 22** interview portfolio. One product — boards, tickets, comments, search, inbox, and admin — not a bag of isolated demos.
+
+There is **no real backend**. The app talks to itself through `HttpClient` / `httpResource` against `/api/**`. A functional interceptor owns an in-memory store (persisted to `localStorage`), fake JWTs, latency, and 401/403/500/timeout knobs.
+
+## Requirements
+
+- Node.js 22+ (see `.nvmrc`)
+- npm 11+ (comes with the repo’s `packageManager` field)
+
+## Quick start
 
 ```bash
 npm install
@@ -12,13 +23,13 @@ npm start
 Open [http://localhost:4200](http://localhost:4200).
 
 ```bash
-npm test
-npm run build
+npm test          # Vitest
+npm run build     # production bundle
 ```
 
 ## Demo accounts
 
-Password for all: `password` (kept in `mock.seed.ts`, **not** written to `localStorage`).
+Password for all: `password` (kept in `src/app/core/mock-backend/mock.seed.ts`, **not** written to `localStorage`).
 
 | Email | Role |
 | --- | --- |
@@ -28,9 +39,26 @@ Password for all: `password` (kept in `mock.seed.ts`, **not** written to `localS
 
 Use the **Demo** switcher in the header to impersonate without retyping credentials. **Chaos** injects latency and errors.
 
-## Nested comments
+This is a teaching app. Auth is a fake JWT in `localStorage` — see [SECURITY.md](SECURITY.md).
 
-Comments are a nested **route** (`.../issues/:id/comments`), a flat list, not threads.
+## Features
+
+- Login with three roles (viewer / member / admin)
+- Project list → kanban board → issue detail
+- Nested **comments route** (flat list, not threads)
+- Create / edit with unsaved-changes guard
+- Debounced search and assignee typeahead
+- Inbox with a polling notification stream
+- Lazy-loaded admin users page
+- Error / latency injection panel
+
+## Stack
+
+- Angular 22, standalone, **zoneless** (no `zone.js`)
+- Signals, `httpResource` for reads, `HttpClient` + RxJS for writes
+- Functional guards, resolvers, and interceptors
+- Signal Forms on login; Reactive Forms on issue create/edit
+- Angular CDK drag-and-drop on the board
 
 ## What to show in interviews
 
@@ -52,4 +80,8 @@ Comments are a nested **route** (`.../issues/:id/comments`), a flat list, not th
 | CDK drag-drop | board columns (same `PATCH` as the status select) |
 | Zoneless | no `zone.js` |
 
-Full design: [docs/issueforge-design.md](docs/issueforge-design.md).
+Design notes: [docs/issueforge-design.md](docs/issueforge-design.md).
+
+## License
+
+[MIT](LICENSE) © 2026 Mauricio Bedoya

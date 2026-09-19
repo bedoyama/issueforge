@@ -1,6 +1,20 @@
 {
   "name": "issueforge",
   "version": "0.0.0",
+  "description": "Modern Angular 22 issue tracker — interview portfolio with mock HTTP and auth",
+  "license": "MIT",
+  "author": "Mauricio Bedoya",
+  "homepage": "https://github.com/bedoyama/issueforge#readme",
+  "bugs": {
+    "url": "https://github.com/bedoyama/issueforge/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bedoyama/issueforge.git"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
